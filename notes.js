@@ -26,8 +26,9 @@ const saveNotes = notes => {
 const addNote = (title, body) => {
   const notes = loadNotes();
   // for each already existing note, search to see if the given title is already taken
-  const duplicateNote = notes.find(note => note.title === title);
-
+  const duplicateNote = notes.find(
+    note => note.title.toLowerCase() === title.toLowerCase()
+  );
   // then if the duplicateNotes array is empty, there is no duplication of title, so feel free to push the notes into the notes batch
   if (!duplicateNote) {
     notes.push({
@@ -48,7 +49,9 @@ const addNote = (title, body) => {
 const removeNote = title => {
   const notes = loadNotes();
   // filter through all notes. Return all notes that do not equal the title given
-  const notesToKeep = notes.filter(note => note.title !== title);
+  const notesToKeep = notes.filter(
+    note => note.title.toLowerCase() !== title.toLowerCase()
+  );
   saveNotes(notesToKeep);
 
   if (notes.length > notesToKeep.length) {
@@ -70,7 +73,9 @@ const listNotes = () => {
 
 const readNote = title => {
   const notes = loadNotes();
-  const foundNote = notes.find(note => note.title === title);
+  const foundNote = notes.find(
+    note => note.title.toLowerCase() === title.toLowerCase()
+  );
   if (foundNote) {
     console.log(chalk.blue.inverse(foundNote.title));
     console.log(chalk.yellow(foundNote.body));
