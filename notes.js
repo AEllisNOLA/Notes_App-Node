@@ -25,10 +25,11 @@ const saveNotes = notes => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  // for each already existing note, if that note title is the same as the given title of the new note, throw it in duplicateNotes array
-  const duplicateNotes = notes.filter(note => note.title === title);
+  // for each already existing note, search to see if the given title is already taken
+  const duplicateNote = notes.find(note => note.title === title);
+
   // then if the duplicateNotes array is empty, there is no duplication of title, so feel free to push the notes into the notes batch
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title,
       body
@@ -67,8 +68,20 @@ const listNotes = () => {
   }
 };
 
+const readNote = title => {
+  const notes = loadNotes();
+  const foundNote = notes.find(note => note.title === title);
+  if (foundNote) {
+    console.log(chalk.blue.inverse(foundNote.title));
+    console.log(chalk.yellow(foundNote.body));
+  } else {
+    console.log(chalk.red.inverse("Note not found."));
+  }
+};
+
 module.exports = {
   addNote,
   removeNote,
-  listNotes
+  listNotes,
+  readNote
 };
