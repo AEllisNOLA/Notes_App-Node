@@ -25,7 +25,7 @@ const saveNotes = notes => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-    // for each already existing note, if that note title is the same as the given title of the new note, throw it in duplicateNotes array
+  // for each already existing note, if that note title is the same as the given title of the new note, throw it in duplicateNotes array
   const duplicateNotes = notes.filter(note => note.title === title);
   // then if the duplicateNotes array is empty, there is no duplication of title, so feel free to push the notes into the notes batch
   if (duplicateNotes.length === 0) {
@@ -57,7 +57,16 @@ const removeNote = title => {
   }
 };
 
+const listNotes = () => {
+  console.log(chalk.blue.inverse("Your Notes:"));
+  const notes = loadNotes();
+  notes.forEach(note =>
+    console.log(chalk.yellow(`${note.title}`))
+  );
+};
+
 module.exports = {
   addNote,
-  removeNote
+  removeNote,
+  listNotes
 };
