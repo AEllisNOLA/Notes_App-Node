@@ -58,11 +58,13 @@ const removeNote = title => {
 };
 
 const listNotes = () => {
-  console.log(chalk.blue.inverse("Your Notes:"));
   const notes = loadNotes();
-  notes.forEach(note =>
-    console.log(chalk.yellow(`${note.title}`))
-  );
+  if (notes.length === 0) {
+    console.log(chalk.red.inverse("You have no notes"));
+  } else {
+    console.log(chalk.blue.inverse("Your Notes:"));
+    notes.forEach(note => console.log(chalk.yellow(`${note.title}`)));
+  }
 };
 
 module.exports = {
